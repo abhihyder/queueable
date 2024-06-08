@@ -1,5 +1,6 @@
 const Queue = require("bull");
 const moment = require("moment");
+const Redis = require("ioredis");
 const fs = require("fs");
 const path = require("path");
 
@@ -50,7 +51,7 @@ module.exports = class Queueable {
       }
     });
 
-    instance.on("completed", (job, result) => {
+    instance.on("completed", async (job, result) => {
       const processEndAt = moment();
       const duration = processEndAt.diff(this.processStartAt);
       if (!result) {
@@ -68,6 +69,10 @@ module.exports = class Queueable {
         );
         this.completed(job, result);
       }
+
+      // Close the queue connection and redis connection
+      await instance.close();
+      this.redisClient.quit();
     });
   }
 
@@ -88,9 +93,13 @@ module.exports = class Queueable {
       defaultConfig = { ...defaultConfig, ...queueableConfig };
     }
 
-    return new Queue(this.derivedClassName, {
-      redis: defaultConfig.redis,
+    this.redisClient = new Redis({
+      ...defaultConfig.redis,
+      maxRetriesPerRequest: null,
+      enableReadyCheck: false,
     });
+
+    return new Queue(this.derivedClassName, this.redisClient);
   }
 
   completed(job, result) {}
