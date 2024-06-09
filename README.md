@@ -1,4 +1,4 @@
-# @jshub/queueable
+# Queueable
 
 A versatile JavaScript utility for simplifying queue management in applications, serving as an abstraction layer over Bull, a Redis-backed queue package for Node.js. Ideal for building scalable and efficient JavaScript applications.
 
@@ -7,13 +7,13 @@ A versatile JavaScript utility for simplifying queue management in applications,
 Install via npm:
 
 ```bash
-npm install @jshub/queueable
+npm install @abhihyder/queueable
 ```
 
 ## Usage
-Before using @jshub/queueable, make sure you have a `Redis` server installed and running. 
+Before using @abhihyder/queueable, make sure you have a `Redis` server installed and running. 
 ```javascript
-const Queueable = require("@jshub/queueable");
+const Queueable = require("@abhihyder/queueable");
 
 class Job extends Queueable {
   handler() {
