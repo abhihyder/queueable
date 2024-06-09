@@ -2,6 +2,18 @@
 
 A versatile JavaScript utility for simplifying queue management in applications, serving as an abstraction layer over Bull, a Redis-backed queue package for Node.js. Ideal for building scalable and efficient JavaScript applications.
 
+## Why Use Queueable?
+- **Minimal Boilerplate Code**: Avoid writing extensive code for queue instantiation, Redis connection, and cleanup. **Queueable** handles these tasks seamlessly for you.
+- **Easy to Use**: Just extend the `Queueable` class and implement your `handler` method.
+- **Customizable**: Supports custom Redis configurations through a simple `queueable.config.js` file.
+
+With **Queueable**, you don't need to write a lot of code to:
+- Get a queue instance
+- Close the Redis connection after completion
+- Close the queue after completion
+
+Everything is handled efficiently within the library.
+
 ## Installation
 
 Install via npm:
