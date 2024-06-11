@@ -23,19 +23,42 @@ npm install @abhihyder/queueable
 ```
 
 ## Usage
-Before using @abhihyder/queueable, make sure you have a `Redis` server installed and running. 
+
+Before using `@abhihyder/queueable`, make sure you have a `Redis` server installed and running.
+
 ```javascript
 const Queueable = require("@abhihyder/queueable");
 
-class Job extends Queueable {
-  handler() {
-    console.log("Console output from handler");
+class ExampleJob extends Queueable {
+  handler(data) {
+    console.log("Processing job with data:", data);
+  }
+
+  completed(job, result) {
+    console.log(`Job ${job.id} completed with result: ${result}`);
+  }
+
+  failed(job, result) {
+    console.log(`Job ${job.id} failed with result: ${result}`);
   }
 }
 
-const job = new Job();
-job.dispatch({});
+const job = new ExampleJob();
+job.dispatch({data:""});
 ```
+
+## Methods
+
+### `handler(data)`
+You must implement this method in your derived class to define the job's main logic. The data passed to the dispatch method will be available in the handler method to perform the necessary logic.
+
+### `completed(job, result)` (Optional)
+This method is called when a job is completed successfully. You can override it in your derived class to perform actions on job completion.
+
+### `failed(job, result)` (Optional)
+This method is called when a job fails. You can override it in your derived class to perform actions on job failure.
+
+> **Note:** The methods `dispatch`, `queueHandler`, and `queueInstance` are reserved for internal use by the `Queueable` class and should not be overridden in derived classes.
 
 ## Configuration
 

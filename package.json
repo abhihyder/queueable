@@ -1,6 +1,6 @@
 {
   "name": "@abhihyder/queueable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A versatile JavaScript utility for simplifying queue management in applications, serving as an abstraction layer over Bull, a Redis-backed queue package for Node.js. Ideal for building scalable and efficient JavaScript applications.",
   "main": "index.js",
   "scripts": {

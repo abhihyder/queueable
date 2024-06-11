@@ -15,11 +15,23 @@ module.exports = class Queueable {
 
   checkMethodImplementations() {
     const abstractMethods = ["handler"];
-    // Check if the required method is implemented in the derived class
+
+    // Check if the required methods are implemented in the derived class
     abstractMethods.forEach((method) => {
       if (typeof this[method] !== "function") {
         throw new Error(
           `Method '${method}' must be implemented in derived classes.`
+        );
+      }
+    });
+
+    const reservedMethods = ["dispatch", "queueHandler", "queueInstance"];
+
+    // Check if the reserved methods are implemented in the derived class
+    reservedMethods.forEach((method) => {
+      if (this.constructor.prototype.hasOwnProperty(method)) {
+        throw new Error(
+          `Method '${method}' is reserved for Queueable class and cannot be overridden.`
         );
       }
     });
